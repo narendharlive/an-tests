@@ -1,5 +1,7 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app-initial.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app-initial.component';
+/// As it should be
+import {DebugElement} from '@angular/core';
 /*
 import { AppComponent } from './app.component';
 
@@ -30,10 +32,6 @@ describe('AppComponent (initial CLI version)', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
   }));
 });
-
-/// As it should be
-import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
 
 describe('AppComponent (initial CLI version - as it should be)', () => {
 

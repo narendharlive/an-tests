@@ -1,12 +1,13 @@
-import { Directive, Input } from '@angular/core';
+/// Dummy module to satisfy Angular Language service. Never used.
+import {Directive, Input, NgModule} from '@angular/core';
 
 // export for convenience.
-export { RouterLink} from '@angular/router';
+export {RouterLink} from '@angular/router';
 
 /* tslint:disable:directive-class-suffix */
 @Directive({
   selector: '[routerLink]',
-  host: { '(click)': 'onClick()' }
+  host: {'(click)': 'onClick()'}
 })
 export class RouterLinkDirectiveStub {
   @Input('routerLink') linkParams: any;
@@ -17,12 +18,11 @@ export class RouterLinkDirectiveStub {
   }
 }
 
-/// Dummy module to satisfy Angular Language service. Never used.
-import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
     RouterLinkDirectiveStub
   ]
 })
-export class RouterStubsModule {}
+export class RouterStubsModule {
+}

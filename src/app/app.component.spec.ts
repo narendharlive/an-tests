@@ -1,21 +1,29 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import {Component, DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { RouterLinkDirectiveStub } from '../testing';
+import {AppComponent} from './app.component';
+import {RouterLinkDirectiveStub} from '../testing';
+//////// Testing w/ real root module //////
+// Tricky because we are disabling the router and its configuration
+// Better to use RouterTestingModule
+import {AppModule} from './app.module';
+import {AppRoutingModule} from './app-routing.module';
 
 @Component({selector: 'app-banner', template: ''})
-class BannerStubComponent {}
+class BannerStubComponent {
+}
 
 @Component({selector: 'router-outlet', template: ''})
-class RouterOutletStubComponent { }
+class RouterOutletStubComponent {
+}
 
 @Component({selector: 'app-welcome', template: ''})
-class WelcomeStubComponent {}
+class WelcomeStubComponent {
+}
 
-let comp:    AppComponent;
+let comp: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
 
 describe('AppComponent & TestModule', () => {
@@ -29,9 +37,9 @@ describe('AppComponent & TestModule', () => {
         WelcomeStubComponent
       ]
     })
-    .compileComponents().then(() => {
+      .compileComponents().then(() => {
       fixture = TestBed.createComponent(AppComponent);
-      comp    = fixture.componentInstance;
+      comp = fixture.componentInstance;
     });
   }));
   tests();
@@ -46,47 +54,41 @@ describe('AppComponent & NO_ERRORS_SCHEMA', () => {
         BannerStubComponent,
         RouterLinkDirectiveStub
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents().then(() => {
+      .compileComponents().then(() => {
       fixture = TestBed.createComponent(AppComponent);
-      comp    = fixture.componentInstance;
+      comp = fixture.componentInstance;
     });
   }));
   tests();
 });
-
-//////// Testing w/ real root module //////
-// Tricky because we are disabling the router and its configuration
-// Better to use RouterTestingModule
-import { AppModule }    from './app.module';
-import { AppRoutingModule } from './app-routing.module';
 
 describe('AppComponent & AppModule', () => {
 
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      imports: [ AppModule ]
+      imports: [AppModule]
     })
 
     // Get rid of app's Router configuration otherwise many failures.
     // Doing so removes Router declarations; add the Router stubs
-    .overrideModule(AppModule, {
-      remove: {
-        imports: [ AppRoutingModule ]
-      },
-      add: {
-        declarations: [ RouterLinkDirectiveStub, RouterOutletStubComponent ]
-      }
-    })
+      .overrideModule(AppModule, {
+        remove: {
+          imports: [AppRoutingModule]
+        },
+        add: {
+          declarations: [RouterLinkDirectiveStub, RouterOutletStubComponent]
+        }
+      })
 
-    .compileComponents()
+      .compileComponents()
 
-    .then(() => {
-      fixture = TestBed.createComponent(AppComponent);
-      comp    = fixture.componentInstance;
-    });
+      .then(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        comp = fixture.componentInstance;
+      });
   }));
 
   tests();

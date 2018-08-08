@@ -1,48 +1,47 @@
 // For more examples:
 //   https://github.com/angular/angular/blob/master/modules/@angular/router/test/integration.spec.ts
 
-import { async, ComponentFixture, fakeAsync, TestBed, tick,
-} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick,} from '@angular/core/testing';
 
-import { asyncData } from '../testing';
+import {asyncData, click} from '../testing';
 
-import { RouterTestingModule } from '@angular/router/testing';
-import { SpyLocation }         from '@angular/common/testing';
-
+import {RouterTestingModule, SpyNgModuleFactoryLoader} from '@angular/router/testing';
+import {SpyLocation} from '@angular/common/testing';
 // r - for relatively obscure router symbols
-import * as r                         from  '@angular/router';
-import { Router, RouterLinkWithHref } from '@angular/router';
+import {Router, RouterLinkWithHref} from '@angular/router';
 
-import { By }                 from '@angular/platform-browser';
-import { DebugElement, Type } from '@angular/core';
-import { Location }           from '@angular/common';
+import {By} from '@angular/platform-browser';
+///////////////
+import {DebugElement, NgModuleFactoryLoader, Type} from '@angular/core';
+import {Location} from '@angular/common';
 
-import { click }              from '../testing';
+import {AppModule} from './app.module';
+import {AppComponent} from './app.component';
+import {AboutComponent} from './about/about.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {TwainService} from './twain/twain.service';
 
-import { AppModule }          from './app.module';
-import { AppComponent }       from './app.component';
-import { AboutComponent }     from './about/about.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { TwainService }       from './twain/twain.service';
+import {HeroService, TestHeroService} from './model/testing/test-hero.service';
 
-import { HeroService, TestHeroService } from './model/testing/test-hero.service';
+import {HeroModule} from './hero/hero.module'; // should be lazy loaded
+import {HeroListComponent} from './hero/hero-list.component';
 
-let comp:     AppComponent;
-let fixture:  ComponentFixture<AppComponent>;
-let page:     Page;
-let router:   Router;
+let comp: AppComponent;
+let fixture: ComponentFixture<AppComponent>;
+let page: Page;
+let router: Router;
 let location: SpyLocation;
 
 describe('AppComponent & RouterTestingModule', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AppModule, RouterTestingModule ],
+      imports: [AppModule, RouterTestingModule],
       providers: [
-        { provide: HeroService, useClass: TestHeroService }
+        {provide: HeroService, useClass: TestHeroService}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   it('should navigate to "Dashboard" immediately', fakeAsync(() => {
@@ -82,13 +81,6 @@ describe('AppComponent & RouterTestingModule', () => {
 });
 
 
-///////////////
-import { NgModuleFactoryLoader }    from '@angular/core';
-import { SpyNgModuleFactoryLoader } from '@angular/router/testing';
-
-import { HeroModule }             from './hero/hero.module';  // should be lazy loaded
-import { HeroListComponent }      from './hero/hero-list.component';
-
 let loader: SpyNgModuleFactoryLoader;
 
 ///////// Can't get lazy loaded Heroes to work yet
@@ -96,15 +88,15 @@ xdescribe('AppComponent & Lazy Loading (not working yet)', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AppModule, RouterTestingModule ]
+      imports: [AppModule, RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(fakeAsync(() => {
     createComponent();
     loader = TestBed.get(NgModuleFactoryLoader);
-    loader.stubbedModules = { expected: HeroModule };
+    loader.stubbedModules = {expected: HeroModule};
     router.resetConfig([{path: 'heroes', loadChildren: 'expected'}]);
   }));
 
@@ -144,7 +136,7 @@ function createComponent() {
   router = injector.get(Router);
   router.initialNavigation();
   spyOn(injector.get(TwainService), 'getQuote')
-    // fake fast async observable
+  // fake fast async observable
     .and.returnValue(asyncData('Test Quote'));
   advance();
 
@@ -152,9 +144,9 @@ function createComponent() {
 }
 
 class Page {
-  aboutLinkDe:     DebugElement;
+  aboutLinkDe: DebugElement;
   dashboardLinkDe: DebugElement;
-  heroesLinkDe:    DebugElement;
+  heroesLinkDe: DebugElement;
 
   // for debugging
   comp: AppComponent;
@@ -164,14 +156,14 @@ class Page {
 
   constructor() {
     const links = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
-    this.aboutLinkDe     = links[2];
+    this.aboutLinkDe = links[2];
     this.dashboardLinkDe = links[0];
-    this.heroesLinkDe    = links[1];
+    this.heroesLinkDe = links[1];
 
     // for debugging
-    this.comp    = comp;
+    this.comp = comp;
     this.fixture = fixture;
-    this.router  = router;
+    this.router = router;
   }
 }
 
