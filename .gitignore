@@ -1,0 +1,58 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.idea
+.idea
+*.idea
+*.lock
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.idea
+.DS_Store
+.vscode
+
+# Built #
+/__build__/
+/__server_build__/
+/node_modules/
+/uploads/
+/typings/
+/tsd_typings/
+/dist/
+/dist-server/
+/compiled/
+/src/assets/audio/
+/src/assets/img/
+/src/assets/json/
+
+# Node #
+*.log
+/npm-debug.log.*
+
+# Webpack #
+webpack.records.json
+
+# Angular #
+*.ngfactory.ts
+*.css.shim.ts
+*.ngsummary.json
+*.metadata.json
+.lock
+*.shim.ngstyle.ts
